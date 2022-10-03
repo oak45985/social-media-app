@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
+// const checkEmail = require('../utils/checkEmail');
 
 const UserSchema = new Schema(
     {
