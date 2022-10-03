@@ -108,12 +108,18 @@ const thoughtController = {
     deleteReaction({ params }, res) {
         Thought.findOneAndUpdate(
             { _id: params.thoughtId },
-            { $pull: { replies: { replyId: params.replyId } } },
+            { $pull: { reactions: { reactionId: params.reactionId } } },
             { new: true }
         )
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbThoughtData => {
+            if (!dbThoughtData) {
+                res.status(404).json({ message: "No thought w/ this id" });
+                return;
+            }
+            res.json(dbThoughtData);
+        })
         .catch(err => res.json(err));
-    }
+    },
 };
 
 module.exports = thoughtController;
